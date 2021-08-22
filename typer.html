@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bengali typer</title>
+<meta charset="utf-8">
+
+    <script type="text/javascript">
+	  
+var conversion = {
+"k": "ক",
+"c": "চ",
+"T": "ট",
+"t": "ত",
+"p": "প",
+"kh": "খ",
+"ch": "ছ",
+"Th": "ঠ",
+"th": "থ",
+"ph": "ফ",
+"g": "গ",
+"j": "জ",
+"D": "ড",
+"d": "দ",
+"b": "ব",
+"gh": "ঘ",
+"jh": "ঝ",
+"Dh": "ঢ",
+"dh": "ধ",
+"bh": "ভ",
+"ng": "ঙ",
+"ny": "ঞ",
+"N": "ণ",
+"n": "ন",
+"m": "ম",
+"h": "হ",
+"y": "য",
+"r": "র",
+"l": "ল",
+"v": "ব",
+"sh": "শ",
+"S": "ষ",
+"s": "স",
+
+"M": "ং",
+"H": "ঃ",
+"C": "‍ঁ",
+"w":"়",
+"q": "‍্",
+
+"a": "&#8203;",
+"aa": "া",
+"i": "ি",
+"ii": "ী",
+"u": "ু",
+"uu": "ূ",
+"R": "ৃ",
+"RR": "ৄ",
+"L": "ৢ",
+"LL": "ৣ",
+"e": "ে",
+"ai": "ৈ",
+"o": "ো",
+"au": "ৌ",
+"qa": "অ",
+"qaa": "আ",
+"qi": "ই",
+"qii": "ঈ",
+"qu": "উ",
+"quu": "ঊ",
+"qR": "ঋ",
+"qRR": "ৠ",
+"qL": "ঌ",
+"qLL": "ৡ",
+"qe": "এ",
+"qai": "ঐ",
+"qo": "ও",
+"qau": "ও",
+
+"1": "১",
+"2": "২",
+"3": "৩",
+"4": "৪",
+"5": "৫",
+"6": "৬",
+"7": "৭",
+"8": "৮",
+"9": "৯",
+"0": "০",
+
+".": "।",
+"_": "‍ঽ",
+
+"K":"[invalid]",
+"G":"[invalid]",
+"Kh":"[invalid]",
+"z":"[invalid]",
+"f":"[invalid]",
+"W": "[invalid]",
+"Z": "[invalid]",
+"Y": "[invalid]",
+"P": "[invalid]",
+"F": "[invalid]",
+"X": "[invalid]",
+"V": "[invalid]",
+"B": "[invalid]",
+"A": "[invalid]",
+"E": "[invalid]",
+"I": "[invalid]",
+"O": "[invalid]",
+"U": "[invalid]",
+"J": "[invalid]",
+
+"kah":"কহ",
+"cah":"চহ",
+"Tah":"টহ",
+"tah":"তহ",
+"pah":"পহ",
+"gah":"গহ",
+"jah":"জহ",
+"Dah":"ডহ",
+"dah":"দহ",
+"bah":"বহ",
+"nag":"নগ",
+"nay":"নয",
+"sah":"সহ",
+        };
+
+ var maxLength = Object.keys(conversion)
+    .reduce((a, b) => a.length > b.length ? a : b) // get the longest word
+    .length; // and it's length
+  
+  function convert (text) {
+    var converted = "";
+    var cur = 0;
+    while (cur < text.length) {
+      var testedPhoneme;
+      var symbol = undefined;
+      for (var length = maxLength; length > 0; length --) {
+        testedPhoneme = text.substr(cur, length);
+        if (conversion[testedPhoneme]) {
+          symbol = conversion[testedPhoneme];
+          break; // stop the loop
+        }
+      }
+      if (symbol) {
+        converted += symbol;
+        cur += testedPhoneme.length;
+      }
+      else {
+        converted += text[cur]
+        cur++;
+      }
+    }
+    return converted
+  }
+
+  function onInputTextChange(txt) {
+    var outputTextareaElem = document.getElementById("output_textarea");
+    var div = document.createElement("div");
+    var outputHtmlEntities = convert(txt);
+    div.innerHTML = outputHtmlEntities;
+    outputTextareaElem.value = div.innerText;
+  }
+
+
+        function select() {
+          const input = document.getElementById('input_textarea');
+          input.focus();
+          input.select();
+        }   
+        function copytext() {
+          var copyText = document.getElementById("output_textarea");
+          copyText.select();
+          copyText.setSelectionRange(0, 99999)
+          document.execCommand("copy");
+        }
+
+    </script>
+    
+<style>
+html {
+font-family:arial
+}
+table {
+  border-collapse: collapse;
+  width: 90%;
+}
+td, th {
+  border: 1px solid #AAA;
+  text-align: center;
+  padding: 1px;
+}
+textarea {
+	font-size: 16pt;
+	font-family: Arial;
+    width: 96%;
+} 
+.note {
+  border: 1px solid #DDD;
+  width: 30%;
+  text-align: left;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+</style>
+
+
+</head>
+<body>  
+
+<body>  
+
+<center><h1 class="text-center">Bengali typer</h1>
+<table>
+<thead>
+<tr>
+<th>	
+<button onclick="select('input_textarea')">Select all</button>
+<button onclick="document.getElementById('input_textarea').value = ''">Clear</button>
+</th>
+<th>
+<button onclick="copytext()">Copy text</button>
+</th>
+<th style="width: 200px">Conversion table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<textarea
+id="input_textarea"
+autofocus=""
+placeholder="Input text here"
+rows="10"
+oninput="onInputTextChange(this.value)"></textarea>    
+</td>
+<td>
+<textarea rows="10" placeholder="output" id="output_textarea"></textarea>    
+</td>
+<td>
+
+<center>
+<div style="overflow-y: scroll; height:250px; width:170px">
+
+<table>
+<thead>
+<tr>
+<th>in.</th>
+<th>out.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>k</td>
+<td>ক</td>
+</tr>
+<tr>
+<td>c</td>
+<td>চ</td>
+</tr>
+<tr>
+<td>T</td>
+<td>ট</td>
+</tr>
+<tr>
+<td>t</td>
+<td>ত</td>
+</tr>
+<tr>
+<td>p</td>
+<td>প</td>
+</tr>
+<tr>
+<td>kh</td>
+<td>খ</td>
+</tr>
+<tr>
+<td>ch</td>
+<td>ছ</td>
+</tr>
+<tr>
+<td>Th</td>
+<td>ঠ</td>
+</tr>
+<tr>
+<td>th</td>
+<td>থ</td>
+</tr>
+<tr>
+<td>ph</td>
+<td>ফ</td>
+</tr>
+<tr>
+<td>g</td>
+<td>গ</td>
+</tr>
+<tr>
+<td>j</td>
+<td>জ</td>
+</tr>
+<tr>
+<td>D</td>
+<td>ড</td>
+</tr>
+<tr>
+<td>d</td>
+<td>দ</td>
+</tr>
+<tr>
+<td>b</td>
+<td>ব</td>
+</tr>
+<tr>
+<td>gh</td>
+<td>ঘ</td>
+</tr>
+<tr>
+<td>jh</td>
+<td>ঝ</td>
+</tr>
+<tr>
+<td>Dh</td>
+<td>ঢ</td>
+</tr>
+<tr>
+<td>dh</td>
+<td>ধ</td>
+</tr>
+<tr>
+<td>bh</td>
+<td>ভ</td>
+</tr>
+<tr>
+<td>ng</td>
+<td>ঙ</td>
+</tr>
+<tr>
+<td>ny</td>
+<td>ঞ</td>
+</tr>
+<tr>
+<td>N</td>
+<td>ণ</td>
+</tr>
+<tr>
+<td>n</td>
+<td>ন</td>
+</tr>
+<tr>
+<td>m</td>
+<td>ম</td>
+</tr>
+<tr>
+<td>h</td>
+<td>হ</td>
+</tr>
+<tr>
+<td>y</td>
+<td>য</td>
+</tr>
+<tr>
+<td>r</td>
+<td>র</td>
+</tr>
+<tr>
+<td>l</td>
+<td>ল</td>
+</tr>
+<tr>
+<td>v</td>
+<td>ব</td>
+</tr>
+<tr>
+<td>sh</td>
+<td>শ</td>
+</tr>
+<tr>
+<td>S</td>
+<td>ষ</td>
+</tr>
+<tr>
+<td>s</td>
+<td>স</td>
+</tr>
+<tr>
+<td>M</td>
+<td>ং</td>
+</tr>
+<tr>
+<td>H</td>
+<td>ঃ</td>
+</tr>
+<tr>
+<td>C</td>
+<td>‍ঁ</td>
+</tr>
+<tr>
+<td>w</td>
+<td>়</td>
+</tr>
+<tr>
+<td>q</td>
+<td>‍্</td>
+</tr>
+<tr>
+<td>a</td>
+<td>&#8203;</td>
+</tr>
+<tr>
+<td>aa</td>
+<td>া</td>
+</tr>
+<tr>
+<td>i</td>
+<td>ি</td>
+</tr>
+<tr>
+<td>ii</td>
+<td>ী</td>
+</tr>
+<tr>
+<td>u</td>
+<td>ু</td>
+</tr>
+<tr>
+<td>uu</td>
+<td>ূ</td>
+</tr>
+<tr>
+<td>R</td>
+<td>ৃ</td>
+</tr>
+<tr>
+<td>RR</td>
+<td>ৄ</td>
+</tr>
+<tr>
+<td>L</td>
+<td>ৢ</td>
+</tr>
+<tr>
+<td>LL</td>
+<td>ৣ</td>
+</tr>
+<tr>
+<td>e</td>
+<td>ে</td>
+</tr>
+<tr>
+<td>ai</td>
+<td>ৈ</td>
+</tr>
+<tr>
+<td>o</td>
+<td>ো</td>
+</tr>
+<tr>
+<td>au</td>
+<td>ৌ</td>
+</tr>
+<tr>
+<td>qa</td>
+<td>অ</td>
+</tr>
+<tr>
+<td>qaa</td>
+<td>আ</td>
+</tr>
+<tr>
+<td>qi</td>
+<td>ই</td>
+</tr>
+<tr>
+<td>qii</td>
+<td>ঈ</td>
+</tr>
+<tr>
+<td>qu</td>
+<td>উ</td>
+</tr>
+<tr>
+<td>quu</td>
+<td>ঊ</td>
+</tr>
+<tr>
+<td>qR</td>
+<td>ঋ</td>
+</tr>
+<tr>
+<td>qRR</td>
+<td>ৠ</td>
+</tr>
+<tr>
+<td>qL</td>
+<td>ঌ</td>
+</tr>
+<tr>
+<td>qLL</td>
+<td>ৡ</td>
+</tr>
+<tr>
+<td>qe</td>
+<td>এ</td>
+</tr>
+<tr>
+<td>qai</td>
+<td>ঐ</td>
+</tr>
+<tr>
+<td>qo</td>
+<td>ও</td>
+</tr>
+<tr>
+<td>qau</td>
+<td>ও</td>
+</tr>
+<tr>
+<td>1</td>
+<td>১</td>
+</tr>
+<tr>
+<td>2</td>
+<td>২</td>
+</tr>
+<tr>
+<td>3</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>4</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>5</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>6</td>
+<td>৬</td>
+</tr>
+<tr>
+<td>7</td>
+<td>৭</td>
+</tr>
+<tr>
+<td>8</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>9</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>0</td>
+<td>০</td>
+</tr>
+<tr>
+<td>.</td>
+<td>।</td>
+</tr>
+<tr>
+<td>_</td>
+<td>‍ঽ</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</center>
+
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+
+</body>
+</html>
